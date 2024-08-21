@@ -52,7 +52,7 @@ export default function NewTripPage() {
 
   return (
     <Container className={classes.wrapper} size={1400}>
-      <Title ta="center" order={2}>
+      <Title ta="center" mt={-30} order={2}>
         Plan your next adventure
       </Title>
       <Center>
