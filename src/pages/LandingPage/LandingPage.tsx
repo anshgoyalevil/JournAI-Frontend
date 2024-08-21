@@ -1,6 +1,7 @@
 import { Title, Text, Button, Container } from '@mantine/core';
 import { Dots } from './Dots';
 import classes from './LandingPage.module.css';
+import { AnimatedBeamUI } from './AnimatedBeam';
 
 export default function LandingPage() {
   return (
@@ -32,6 +33,7 @@ export default function LandingPage() {
           </Button>
         </div>
       </div>
+      <AnimatedBeamUI />
     </Container>
   );
 }
