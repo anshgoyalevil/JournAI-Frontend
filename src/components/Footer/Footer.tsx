@@ -1,5 +1,6 @@
 import { Text, Container, ActionIcon, Group, rem } from '@mantine/core';
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
+import { IconBrandTwitter, IconBrandInstagram } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 import classes from './Footer.module.css';
 import Logo from '../Navbar/Logo';
 
@@ -7,29 +8,19 @@ const data = [
   {
     title: 'About',
     links: [
-      { label: 'Features', link: '#' },
-      { label: 'Pricing', link: '#' },
-      { label: 'Support', link: '#' },
-      { label: 'Forums', link: '#' },
+      { label: 'GitHub', link: 'https://github.com/anshgoyalevil' },
+      { label: 'LinkedIn', link: 'https://www.linkedin.com/in/thisisanshg/' },
+      { label: 'Portfolio', link: 'https://game.anshg.co/' },
+      { label: 'Twitter', link: 'https://x.com/thisisanshg' },
     ],
   },
   {
     title: 'Project',
-    links: [
-      { label: 'Contribute', link: '#' },
-      { label: 'Media assets', link: '#' },
-      { label: 'Changelog', link: '#' },
-      { label: 'Releases', link: '#' },
-    ],
+    links: [{ label: 'Contribute', link: 'https://github.com/anshgoyalevil' }],
   },
   {
     title: 'Community',
-    links: [
-      { label: 'Join Discord', link: '#' },
-      { label: 'Follow on Twitter', link: '#' },
-      { label: 'Email newsletter', link: '#' },
-      { label: 'GitHub discussions', link: '#' },
-    ],
+    links: [{ label: 'No community yet :)', link: '#' }],
   },
 ];
 
@@ -60,25 +51,34 @@ export default function Footer() {
       <Container className={classes.inner}>
         <div className={classes.logo}>
           <Logo />
-          <Text size="xs" c="dimmed" className={classes.description}>
-            Build fully functional accessible web applications faster than ever
+          <Text ta="center" size="xs" c="dimmed" className={classes.description}>
+            Build, personalize, and optimize your itineraries with our free AI trip planner.
           </Text>
         </div>
         <div className={classes.groups}>{groups}</div>
       </Container>
       <Container className={classes.afterFooter}>
         <Text c="dimmed" size="sm">
-          © 2020 mantine.dev. All rights reserved.
+          © 2024 | Built with ❤️ by Ansh Goyal
         </Text>
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
-          <ActionIcon size="lg" color="gray" variant="subtle">
+          <ActionIcon
+            component={Link}
+            to="https://x.com/thisisanshg"
+            size="lg"
+            color="gray"
+            variant="subtle"
+          >
             <IconBrandTwitter style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
-          <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandYoutube style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon size="lg" color="gray" variant="subtle">
+          <ActionIcon
+            component={Link}
+            to="https://instagram.com/thisisanshg"
+            size="lg"
+            color="gray"
+            variant="subtle"
+          >
             <IconBrandInstagram style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
         </Group>
