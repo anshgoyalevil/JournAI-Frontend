@@ -28,7 +28,9 @@ export function Navbar() {
 
           <Group visibleFrom="sm">
             <ColorSchemeToggle />
-            <Button>Add a trip</Button>
+            <Button component={Link} to="/new-trip">
+              Add a trip
+            </Button>
           </Group>
 
           <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
@@ -59,7 +61,9 @@ export function Navbar() {
           <Divider my="sm" />
           <Group justify="center" pb="xl" px="md">
             <ColorSchemeToggle />
-            <Button>Add a trip</Button>
+            <Button component={Link} to="/new-trip">
+              Add a trip
+            </Button>
           </Group>
         </ScrollArea>
       </Drawer>
