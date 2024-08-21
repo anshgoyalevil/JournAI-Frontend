@@ -1,7 +1,7 @@
 import { Title, Text, Button, Container } from '@mantine/core';
+import { Link } from 'react-router-dom';
 import { Dots } from './Dots';
 import classes from './LandingPage.module.css';
-import { AnimatedBeamUI } from './AnimatedBeam';
 
 export default function LandingPage() {
   return (
@@ -28,12 +28,12 @@ export default function LandingPage() {
         </Container>
 
         <div className={classes.controls}>
-          <Button className={classes.control} size="lg">
+          <Button component={Link} to="/new-trip" className={classes.control} size="lg">
             Create a new trip
           </Button>
         </div>
       </div>
-      <AnimatedBeamUI />
+      {/* <AnimatedBeamUI /> */}
     </Container>
   );
 }
