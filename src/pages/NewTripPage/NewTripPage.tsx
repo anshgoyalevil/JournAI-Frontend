@@ -132,7 +132,7 @@ export default function NewTripPage() {
             Plan your next adventure
           </Title>
           <Center>
-            <Box mt={40} w={500}>
+            <Box mt={40} w={600}>
               <form onSubmit={form.onSubmit(submitNewTrip)}>
                 <Text fw={600}>Where do you want to go?</Text>
                 {form.values.placesDates.map((placeDate: any, index) => (
