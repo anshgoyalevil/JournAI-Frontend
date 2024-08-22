@@ -23,6 +23,7 @@ import {
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
 import axios from 'axios';
+import { notifications } from '@mantine/notifications';
 import classes from './NewTripPage.module.css';
 
 export default function NewTripPage() {
@@ -91,7 +92,10 @@ export default function NewTripPage() {
         localStorage.setItem('requests', JSON.stringify([formData]));
       }
     } catch (error) {
-      console.error('Error submitting the trip:', error);
+      notifications.show({
+        title: 'Error submitting form',
+        message: 'Please try again later',
+      });
     }
   };
 
