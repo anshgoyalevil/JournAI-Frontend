@@ -1,8 +1,9 @@
 import { IconHeart, IconTrash } from '@tabler/icons-react';
 import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
 import React from 'react';
-import classes from './TripCard.module.css';
 import { Link } from 'react-router-dom';
+import { notifications } from '@mantine/notifications';
+import classes from './TripCard.module.css';
 
 interface TripCardProps {
   budget: string;
@@ -149,7 +150,21 @@ export default function TripCard({
           Show itinerary
         </Button>
         <ActionIcon
-          onClick={isFav ? removeFromFavourites : addToFavourites}
+          onClick={() => {
+            if (isFav) {
+              removeFromFavourites();
+              notifications.show({
+                title: 'Removed from favourites',
+                message: 'This trip has been removed from your favourites',
+              });
+            } else {
+              addToFavourites();
+              notifications.show({
+                title: 'Added to favourites',
+                message: 'This trip has been added to your favourites',
+              });
+            }
+          }}
           variant="default"
           radius="md"
           size={36}
