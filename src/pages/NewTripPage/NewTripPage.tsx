@@ -59,28 +59,35 @@ export default function NewTripPage() {
   };
 
   const submitNewTrip = async () => {
+    const uniqId = Math.random().toString(36).substring(7);
     const formData = {
       placesDates: form.values.placesDates,
       prefs,
       budget,
       people,
-      uniqId: Math.random().toString(36).substring(7),
+      uniqId,
     };
     try {
       const res = await axios.post('http://127.0.0.1:8080/api/newtrip', formData);
-      setResponse(res.data);
-      const reqs = localStorage.getItem('requests');
-      if (reqs) {
-        localStorage.setItem('requests', JSON.stringify([...JSON.parse(reqs), formData]));
-      } else {
-        localStorage.setItem('requests', JSON.stringify([formData]));
+
+      if (res.status === 201) {
+        setResponse(res.data.data);
+        const responses = localStorage.getItem('response');
+        if (responses) {
+          localStorage.setItem(
+            'response',
+            JSON.stringify([...JSON.parse(responses), { tripData: res.data.data, uniqId }])
+          );
+        } else {
+          localStorage.setItem('response', JSON.stringify([{ tripData: res.data.data, uniqId }]));
+        }
       }
 
-      const trips = localStorage.getItem('trips');
-      if (trips) {
-        localStorage.setItem('trips', JSON.stringify([...JSON.parse(trips), res.data]));
-      } else {
-        localStorage.setItem('trips', JSON.stringify([res.data]));
+      const reqs = localStorage.getItem('requests');
+      if (reqs && res.status === 201) {
+        localStorage.setItem('requests', JSON.stringify([...JSON.parse(reqs), formData]));
+      } else if (res.status === 201) {
+        localStorage.setItem('requests', JSON.stringify([formData]));
       }
     } catch (error) {
       console.error('Error submitting the trip:', error);

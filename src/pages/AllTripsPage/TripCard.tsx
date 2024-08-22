@@ -2,6 +2,7 @@ import { IconHeart, IconTrash } from '@tabler/icons-react';
 import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
 import React from 'react';
 import classes from './TripCard.module.css';
+import { Link } from 'react-router-dom';
 
 interface TripCardProps {
   budget: string;
@@ -138,7 +139,13 @@ export default function TripCard({
       </Card.Section>
 
       <Group mt="xs">
-        <Button variant="light" radius="md" style={{ flex: 1 }}>
+        <Button
+          component={Link}
+          to={`/trip/${uniqId}`}
+          variant="light"
+          radius="md"
+          style={{ flex: 1 }}
+        >
           Show itinerary
         </Button>
         <ActionIcon

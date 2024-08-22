@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import Footer from './components/Footer/Footer';
 import NewTripPage from './pages/NewTripPage/NewTripPage';
 import AllTripsPage from './pages/AllTripsPage/AllTripsPage';
+import TripPage from './pages/TripPage/TripPage';
 
 export function Router() {
   return (
@@ -14,6 +15,9 @@ export function Router() {
         <Route index element={<LandingPage />} />
         <Route path="new-trip" element={<NewTripPage />} />
         <Route path="my-trips" element={<AllTripsPage />} />
+        <Route path="trip">
+          <Route path=":tripId" element={<TripPage />} />
+        </Route>
       </Routes>
       <Footer />
     </>
