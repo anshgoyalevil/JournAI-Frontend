@@ -5,7 +5,7 @@ import TripCard from './TripCard';
 
 export default function AllTripsPage() {
   const [data, setData] = React.useState<any>(null);
-  const [favs, setFavs] = React.useState<any>(null);
+  const [isfavs, setisFavs] = React.useState<any>(null);
 
   React.useEffect(() => {
     const reqs = localStorage.getItem('requests');
@@ -13,20 +13,24 @@ export default function AllTripsPage() {
     if (reqs) {
       setData(JSON.parse(reqs));
     } else {
-      setData(null);
+      setData([]);
+    }
+    if (favs) {
+      setisFavs(JSON.parse(favs));
     }
   }, []);
 
-  const reqCards = data?.map((req: any, index: number) => (
+  const reqCards = data?.map((dataItem: any, index: number) => (
     <Grid.Col span={{ base: 12, xs: 4 }} key={index}>
       <TripCard
-        budget={data.budget}
-        people={data.people}
-        placesDates={data.placesDates}
-        prefs={data.prefs}
-        uniqId={data.uniqId}
+        budget={dataItem.budget}
+        people={dataItem.people}
+        placesDates={dataItem.placesDates}
+        prefs={dataItem.prefs}
+        uniqId={dataItem.uniqId}
         setData={setData}
-        isFav={favs ? favs.includes(data.uniqId) : false}
+        isFav={isfavs ? isfavs.includes(dataItem.uniqId) : false}
+        setIsFav={setisFavs}
       />
     </Grid.Col>
   ));
@@ -37,7 +41,7 @@ export default function AllTripsPage() {
         Your trip itenaries
       </Title>
       <Grid>
-        {reqCards !== undefined && (reqCards && reqCards.length !== 0) ? (
+        {reqCards !== undefined && reqCards && reqCards.length !== 0 ? (
           reqCards
         ) : (
           <Grid.Col span={{ base: 12, xs: 12 }}>

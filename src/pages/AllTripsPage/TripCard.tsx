@@ -1,7 +1,7 @@
 import { IconHeart, IconTrash } from '@tabler/icons-react';
 import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
-import classes from './TripCard.module.css';
 import React from 'react';
+import classes from './TripCard.module.css';
 
 interface TripCardProps {
   budget: string;
@@ -15,6 +15,8 @@ interface TripCardProps {
   prefs: string[];
   uniqId: string;
   setData: (requests: any) => void;
+  isFav: boolean;
+  setIsFav: (favs: any) => void;
 }
 
 const imageIDs = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
@@ -26,25 +28,14 @@ export default function TripCard({
   prefs,
   uniqId,
   setData,
+  isFav,
+  setIsFav,
 }: TripCardProps) {
-  const [cardData, setCardData] = React.useState<any>(null);
-
-  React.useEffect(() => {
-    const favs = localStorage.getItem('favourites');
-    setCardData({
-      budget,
-      people,
-      placesDates,
-      prefs,
-      uniqId,
-      setData,
-      isFav: favs ? JSON.parse(favs).includes(uniqId) : false,
-    });
-  }, []);
+  React.useEffect(() => {}, []);
 
   const preferences = prefs.map((pref) => (
     <Badge variant="light" key={pref}>
-      {cardData.pref}
+      {pref}
     </Badge>
   ));
 
@@ -60,7 +51,7 @@ export default function TripCard({
 
     favourites.push(uniqId);
     localStorage.setItem('favourites', JSON.stringify(favourites));
-    cardData.favs.push(uniqId);
+    setIsFav(favourites);
   };
 
   const removeFromFavourites = () => {
@@ -77,7 +68,7 @@ export default function TripCard({
       'favourites',
       JSON.stringify(favourites.filter((favId: string) => favId !== uniqId))
     );
-    setCardData({ ...cardData, favs: cardData.favs.filter((favId: string) => favId !== uniqId) });
+    setIsFav(favourites.filter((favId: string) => favId !== uniqId));
   };
 
   const deleteTrip = () => {
@@ -102,7 +93,7 @@ export default function TripCard({
       <Card.Section>
         <Image
           src={`https://picsum.photos/id/${imageIDs[Math.floor(Math.random() * imageIDs.length)]}/500/300`}
-          alt={cardData.placesDates[0].place}
+          alt={placesDates[0].place}
           height={180}
         />
       </Card.Section>
@@ -110,13 +101,13 @@ export default function TripCard({
       <Card.Section className={classes.section} mt="md">
         <Group justify="apart">
           <Text fz="lg" fw={500}>
-            {cardData.placesDates[0].place}
+            {placesDates[0].place}
           </Text>
           <Badge size="md" variant="light">
-            {`Cost: ${cardData.budget}`}
+            {`Cost: ${budget}`}
           </Badge>
           <Badge size="md" variant="light">
-            {cardData.people}
+            {people}
           </Badge>
         </Group>
       </Card.Section>
@@ -134,8 +125,17 @@ export default function TripCard({
         <Button radius="md" style={{ flex: 1 }}>
           Show itinerary
         </Button>
-        <ActionIcon variant="default" radius="md" size={36}>
-          <IconHeart className={classes.like} stroke={1.5} />
+        <ActionIcon
+          onClick={isFav ? removeFromFavourites : addToFavourites}
+          variant="default"
+          radius="md"
+          size={36}
+        >
+          <IconHeart
+            fill={isFav === true ? '#FA5252' : '#3B3B3B'}
+            className={classes.like}
+            stroke={1.5}
+          />
         </ActionIcon>
         <ActionIcon onClick={deleteTrip} variant="default" radius="md" size={36}>
           <IconTrash className={classes.like} stroke={1.5} />
