@@ -10,9 +10,10 @@ import {
   Divider,
   Chip,
   Group,
+  NumberInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IconCalendar, IconLocation, IconMoneybag, IconTrash } from '@tabler/icons-react';
+import { IconCalendar, IconLocation, IconMoneybag, IconTrash, IconUsersGroup } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
 import classes from './NewTripPage.module.css';
@@ -20,6 +21,7 @@ import classes from './NewTripPage.module.css';
 export default function NewTripPage() {
   const [prefs, setPrefs] = useState(['Museums', 'Historical']);
   const [budget, setBudget] = useState('');
+  const [people, setPeople] = useState<string | number>('');
   const form = useForm({
     initialValues: {
       placesDates: [
@@ -145,6 +147,17 @@ export default function NewTripPage() {
               onChange={(event) => setBudget(event.currentTarget.value)}
               required
               leftSection={<IconMoneybag style={{ width: rem(18), height: rem(18) }} />}
+            />
+            <Text fw={600} mt={30}>
+              How many people are going?
+            </Text>
+            <NumberInput
+              mt={15}
+              placeholder="2"
+              value={people}
+              onChange={setPeople}
+              required
+              leftSection={<IconUsersGroup style={{ width: rem(18), height: rem(18) }} />}
             />
             <Center>
               <Button justify="center" variant="light" mt={40} type="submit">
