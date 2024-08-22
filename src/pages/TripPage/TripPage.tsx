@@ -11,8 +11,9 @@ export default function TripPage() {
   useEffect(() => {
     const response = JSON.parse(localStorage.getItem('response') || '[]');
     const tData = response.find((res: any) => res.uniqId === tripId);
+    console.log(tData);
     if (tData !== null) {
-      setTripData(tData.tripData.data.trip);
+      setTripData(tData.tripData.trip);
     }
   }, []);
 
