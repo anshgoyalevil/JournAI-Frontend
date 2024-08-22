@@ -29,6 +29,7 @@ export default function NewTripPage() {
   const [prefs, setPrefs] = useState(['Museums', 'Historical']);
   const [budget, setBudget] = useState('');
   const [people, setPeople] = useState<string | number>(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [response, setResponse] = useState<any>(null);
   const form = useForm({
     initialValues: {
