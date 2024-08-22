@@ -13,15 +13,23 @@ import {
   NumberInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IconCalendar, IconLocation, IconMoneybag, IconTrash, IconUsersGroup } from '@tabler/icons-react';
+import {
+  IconCalendar,
+  IconLocation,
+  IconMoneybag,
+  IconTrash,
+  IconUsersGroup,
+} from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
+import axios from 'axios';
 import classes from './NewTripPage.module.css';
 
 export default function NewTripPage() {
   const [prefs, setPrefs] = useState(['Museums', 'Historical']);
   const [budget, setBudget] = useState('');
-  const [people, setPeople] = useState<string | number>('');
+  const [people, setPeople] = useState<string | number>(1);
+  const [response, setResponse] = useState<any>(null);
   const form = useForm({
     initialValues: {
       placesDates: [
@@ -50,7 +58,34 @@ export default function NewTripPage() {
     );
   };
 
-  const submitNewTrip = () => {};
+  const submitNewTrip = async () => {
+    const formData = {
+      placesDates: form.values.placesDates,
+      prefs,
+      budget,
+      people,
+      uniqId: Math.random().toString(36).substring(7),
+    };
+    try {
+      const res = await axios.post('http://127.0.0.1:8080/api/newtrip', formData);
+      setResponse(res.data);
+      const reqs = localStorage.getItem('requests');
+      if (reqs) {
+        localStorage.setItem('requests', JSON.stringify([...JSON.parse(reqs), formData]));
+      } else {
+        localStorage.setItem('requests', JSON.stringify([formData]));
+      }
+
+      const trips = localStorage.getItem('trips');
+      if (trips) {
+        localStorage.setItem('trips', JSON.stringify([...JSON.parse(trips), res.data]));
+      } else {
+        localStorage.setItem('trips', JSON.stringify([res.data]));
+      }
+    } catch (error) {
+      console.error('Error submitting the trip:', error);
+    }
+  };
 
   return (
     <Container className={classes.wrapper} size={1400}>
@@ -109,31 +144,31 @@ export default function NewTripPage() {
             <Chip.Group multiple value={prefs} onChange={setPrefs}>
               <Group justify="center" mt="md">
                 <Chip variant="outline" value="Kid Friendly">
-                  Kid Friendly
+                  🛝 Kid Friendly
                 </Chip>
                 <Chip variant="outline" value="Museums">
-                  Museums
+                  🖼️ Museums
                 </Chip>
                 <Chip variant="outline" value="Outdoor Adventures">
-                  Outdoor Adventures
+                  🎴 Outdoor Adventures
                 </Chip>
                 <Chip variant="outline" value="Shopping">
-                  Shopping
+                  🛒 Shopping
                 </Chip>
                 <Chip variant="outline" value="Historical">
-                  Historical
+                  🧱 Historical
                 </Chip>
                 <Chip variant="outline" value="Art & Cultural">
-                  Art & Cultural
+                  🎨 Art & Cultural
                 </Chip>
                 <Chip variant="outline" value="Amusement Parks">
-                  Amusement Parks
+                  🎡 Amusement Parks
                 </Chip>
                 <Chip variant="outline" value="Religious">
-                  Religious
+                  ⛪ Religious
                 </Chip>
                 <Chip variant="outline" value="Pet Friendly">
-                  Pet Friendly
+                  🐱 Pet Friendly
                 </Chip>
               </Group>
             </Chip.Group>
