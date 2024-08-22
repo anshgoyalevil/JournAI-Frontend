@@ -17,6 +17,7 @@ interface TripCardProps {
   setData: (requests: any) => void;
   isFav: boolean;
   setIsFav: (favs: any) => void;
+  index: number;
 }
 
 const imageIDs = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
@@ -30,6 +31,7 @@ export default function TripCard({
   setData,
   isFav,
   setIsFav,
+  index,
 }: TripCardProps) {
   React.useEffect(() => {}, []);
 
@@ -81,18 +83,32 @@ export default function TripCard({
       requests = [];
     }
 
+    const favs = localStorage.getItem('favourites');
+    let favourites;
+
+    if (favs) {
+      favourites = JSON.parse(favs);
+    } else {
+      favourites = [];
+    }
+
     localStorage.setItem(
       'requests',
       JSON.stringify(requests.filter((req: any) => req.uniqId !== uniqId))
     );
+    localStorage.setItem(
+      'favourites',
+      JSON.stringify(favourites.filter((favId: string) => favId !== uniqId))
+    );
+    setIsFav(favourites.filter((favId: string) => favId !== uniqId));
     setData(requests.filter((req: any) => req.uniqId !== uniqId));
   };
 
   return (
-    <Card withBorder radius="md" p="md" className={classes.card}>
+    <Card h="100%" withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
         <Image
-          src={`https://picsum.photos/id/${imageIDs[Math.floor(Math.random() * imageIDs.length)]}/500/300`}
+          src={`https://picsum.photos/id/${imageIDs[index % 10]}/500/300`}
           alt={placesDates[0].place}
           height={180}
         />
@@ -107,7 +123,7 @@ export default function TripCard({
             {`Cost: ${budget}`}
           </Badge>
           <Badge size="md" variant="light">
-            {people}
+            {`Size: ${people}`}
           </Badge>
         </Group>
       </Card.Section>
@@ -122,7 +138,7 @@ export default function TripCard({
       </Card.Section>
 
       <Group mt="xs">
-        <Button radius="md" style={{ flex: 1 }}>
+        <Button variant="light" radius="md" style={{ flex: 1 }}>
           Show itinerary
         </Button>
         <ActionIcon

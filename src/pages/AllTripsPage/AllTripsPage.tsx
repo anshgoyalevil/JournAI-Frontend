@@ -31,6 +31,7 @@ export default function AllTripsPage() {
         setData={setData}
         isFav={isfavs ? isfavs.includes(dataItem.uniqId) : false}
         setIsFav={setisFavs}
+        index={index}
       />
     </Grid.Col>
   ));
