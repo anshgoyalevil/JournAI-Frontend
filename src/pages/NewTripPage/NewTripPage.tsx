@@ -89,27 +89,27 @@ export default function NewTripPage() {
       setLoading(true);
       const res = await axios.post('https://journai-backend-production.up.railway.app/api/newtrip', formData);
 
-      if (res.status === 201) {
-        setResponse(res.data.data);
+      if (res.status === 200) {
+        setResponse(res.data[0]);
         const responses = localStorage.getItem('response');
         if (responses) {
           localStorage.setItem(
             'response',
-            JSON.stringify([...JSON.parse(responses), { tripData: res.data.data, uniqId }])
+            JSON.stringify([...JSON.parse(responses), { tripData: res.data[0], uniqId }])
           );
         } else {
-          localStorage.setItem('response', JSON.stringify([{ tripData: res.data.data, uniqId }]));
+          localStorage.setItem('response', JSON.stringify([{ tripData: res.data[0], uniqId }]));
         }
       }
 
       const reqs = localStorage.getItem('requests');
-      if (reqs && res.status === 201) {
+      if (reqs && res.status === 200) {
         localStorage.setItem('requests', JSON.stringify([...JSON.parse(reqs), formData]));
-      } else if (res.status === 201) {
+      } else if (res.status === 200) {
         localStorage.setItem('requests', JSON.stringify([formData]));
       }
       setLoading(false);
-      window.location.href = `/trip/${uniqId}`;
+      // window.location.href = `/trip/${uniqId}`;
     } catch (error) {
       setLoading(false);
       notifications.show({

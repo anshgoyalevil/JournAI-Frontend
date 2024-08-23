@@ -12,7 +12,7 @@ export default function TripPage() {
     const response = JSON.parse(localStorage.getItem('response') || '[]');
     const tData = response.find((res: any) => res.uniqId === tripId);
     if (tData !== null) {
-      setTripData(tData.tripData.trip);
+      setTripData(tData.tripData.data.trip);
     }
   }, [tripId]);
 
