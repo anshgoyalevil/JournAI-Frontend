@@ -87,7 +87,7 @@ export default function NewTripPage() {
     };
     try {
       setLoading(true);
-      const res = await axios.post('http://127.0.0.1:8080/api/newtrip', formData);
+      const res = await axios.post('https://journai-backend-production.up.railway.app/api/newtrip', formData);
 
       if (res.status === 201) {
         setResponse(res.data.data);
