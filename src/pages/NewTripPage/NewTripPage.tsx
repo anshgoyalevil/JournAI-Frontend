@@ -109,7 +109,7 @@ export default function NewTripPage() {
         localStorage.setItem('requests', JSON.stringify([formData]));
       }
       setLoading(false);
-      // window.location.href = `/trip/${uniqId}`;
+      window.location.href = `/trip/${uniqId}`;
     } catch (error) {
       setLoading(false);
       notifications.show({
