@@ -5,7 +5,15 @@ import classes from './Navbar.module.css';
 import Logo from './Logo';
 import ColorSchemeToggle from '../ColorSchemeToggle/ColorSchemeToggle';
 
+/**
+ * Navbar component that renders the navigation bar for the application.
+ * The navigation bar includes links to different pages, a color scheme toggle, and a responsive drawer for mobile devices.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered Navbar component.
+ */
 export function Navbar() {
+  // State and handlers for controlling the drawer's open/close state
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
 
   return (
@@ -14,6 +22,7 @@ export function Navbar() {
         <Group justify="space-between" h="100%">
           <Logo />
 
+          {/* Navigation links visible on larger screens */}
           <Group h="100%" gap={0} visibleFrom="sm">
             <Link to="/" className={classes.link}>
               Home
@@ -26,6 +35,7 @@ export function Navbar() {
             </Link>
           </Group>
 
+          {/* Color scheme toggle and "Add a trip" button visible on larger screens */}
           <Group visibleFrom="sm">
             <ColorSchemeToggle />
             <Button component={Link} to="/new-trip">
@@ -33,10 +43,12 @@ export function Navbar() {
             </Button>
           </Group>
 
+          {/* Burger icon for toggling the drawer on smaller screens */}
           <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
         </Group>
       </header>
 
+      {/* Drawer component for navigation on smaller screens */}
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
@@ -49,6 +61,7 @@ export function Navbar() {
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
           <Divider my="sm" />
 
+          {/* Drawer navigation links */}
           <Link to="/" className={classes.link}>
             Home
           </Link>
@@ -59,6 +72,8 @@ export function Navbar() {
             My Trips
           </Link>
           <Divider my="sm" />
+
+          {/* Drawer content including color scheme toggle and "Add a trip" button */}
           <Group justify="center" pb="xl" px="md">
             <ColorSchemeToggle />
             <Button component={Link} to="/new-trip">

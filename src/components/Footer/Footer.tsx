@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import classes from './Footer.module.css';
 import Logo from '../Navbar/Logo';
 
+/**
+ * Data structure representing the footer links.
+ * Each object contains a title and an array of links associated with that title.
+ * @type {Array<{ title: string, links: Array<{ label: string, link: string }> }>}
+ */
 const data = [
   {
     title: 'About',
@@ -24,19 +29,22 @@ const data = [
   },
 ];
 
+/**
+ * Footer component rendering the footer of the page.
+ * Includes links to various social media profiles and other relevant pages.
+ * @component
+ * @returns {JSX.Element} The rendered footer component.
+ */
 export default function Footer() {
+  // Map through the data to create groups of links
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
-      <Text<'a'>
-        key={index}
-        className={classes.link}
-        component="a"
-        href={link.link}
-      >
+      <Text<'a'> key={index} className={classes.link} component="a" href={link.link}>
         {link.label}
       </Text>
     ));
 
+    // Return a group with a title and associated links
     return (
       <div className={classes.wrapper} key={group.title}>
         <Text className={classes.title}>{group.title}</Text>

@@ -24,6 +24,14 @@ interface TripCardProps {
 
 const imageIDs = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
+/**
+ * TripCard component that displays information about a trip.
+ * Includes options to add to favorites, remove from favorites, or delete the trip.
+ *
+ * @component
+ * @param {TripCardProps} props - The properties for the TripCard component.
+ * @returns {JSX.Element} The rendered TripCard component.
+ */
 export default function TripCard({
   budget,
   people,
@@ -35,8 +43,6 @@ export default function TripCard({
   setIsFav,
   index,
 }: TripCardProps) {
-  React.useEffect(() => {}, []);
-
   const preferences = prefs.map((pref) => (
     <Badge variant="light" key={pref}>
       {pref}
@@ -58,6 +64,9 @@ export default function TripCard({
     setIsFav(favourites);
   };
 
+  /**
+   * Remove the current trip from favorites.
+   */
   const removeFromFavourites = () => {
     const favs = localStorage.getItem('favourites');
     let favourites;
@@ -75,6 +84,9 @@ export default function TripCard({
     setIsFav(favourites.filter((favId: string) => favId !== uniqId));
   };
 
+  /**
+   * Delete the current trip from both requests and favorites.
+   */
   const deleteTrip = () => {
     const reqs = localStorage.getItem('requests');
     let requests;
@@ -122,7 +134,7 @@ export default function TripCard({
             {placesDates[0].place}
           </Text>
           <Badge size="md" variant="light">
-            {`Cost: ${budget}`}
+            {`Cost: $${budget}`}
           </Badge>
           <Badge size="md" variant="light">
             {`Size: ${people}`}
@@ -169,11 +181,7 @@ export default function TripCard({
           radius="md"
           size={36}
         >
-          <IconHeart
-            fill={isFav === true ? '#FA5252' : '#3B3B3B'}
-            className={classes.like}
-            stroke={1.5}
-          />
+          <IconHeart fill={isFav ? '#FA5252' : '#3B3B3B'} className={classes.like} stroke={1.5} />
         </ActionIcon>
         <ActionIcon onClick={deleteTrip} variant="default" radius="md" size={36}>
           <IconTrash className={classes.like} stroke={1.5} />

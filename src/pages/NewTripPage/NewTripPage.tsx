@@ -32,17 +32,25 @@ import AnimatedLoaderDark from '../../lotties/animateLoaderDark.json';
 import classes from './NewTripPage.module.css';
 import newTripService from '@/services/newTripService';
 
+/**
+ * NewTripPage component for creating a new trip itinerary.
+ * Handles form inputs for trip details and submission.
+ * Displays loading animation during submission and handles errors.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered NewTripPage component.
+ */
 export default function NewTripPage() {
-  const [prefs, setPrefs] = useState(['Museums', 'Historical']);
-  const [budget, setBudget] = useState('');
-  const [people, setPeople] = useState<string | number>(1);
-  const [accessKey, setAccessKey] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [prefs, setPrefs] = useState(['Museums', 'Historical']); // Trip preferences
+  const [budget, setBudget] = useState(''); // Trip budget
+  const [people, setPeople] = useState<string | number>(1); // Number of people
+  const [accessKey, setAccessKey] = useState(''); // Access key
+  const [loading, setLoading] = useState(false); // Loading state
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [scroll, scrollTo] = useWindowScroll();
-  const [opened, { toggle, close }] = useDisclosure(false);
-  const matches = useMediaQuery('(min-width: 28em)');
-  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+  const [scroll, scrollTo] = useWindowScroll(); // Scroll position
+  const [opened, { toggle, close }] = useDisclosure(false); // Dialog open state
+  const matches = useMediaQuery('(min-width: 28em)'); // Media query for responsive design
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true }); // Color scheme
 
   const defaultOptionsForLottie = {
     loop: true,
@@ -54,7 +62,7 @@ export default function NewTripPage() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [response, setResponse] = useState<any>(null);
+  const [response, setResponse] = useState<any>(null); // API response
   const form = useForm({
     initialValues: {
       placesDates: [
@@ -66,6 +74,9 @@ export default function NewTripPage() {
     },
   });
 
+  /**
+   * Adds a new place/date input field to the form.
+   */
   const addPlaceDate = () => {
     form.setFieldValue('placesDates', [
       ...form.values.placesDates,
@@ -76,6 +87,11 @@ export default function NewTripPage() {
     ]);
   };
 
+  /**
+   * Deletes a specific place/date input field from the form.
+   *
+   * @param {number} index - The index of the field to be deleted.
+   */
   const deletePlaceDate = (index: number) => {
     form.setFieldValue(
       'placesDates',
@@ -83,6 +99,9 @@ export default function NewTripPage() {
     );
   };
 
+  /**
+   * Submits the form data to the API and handles the response.
+   */
   const submitNewTrip = async () => {
     const uniqId = Math.random().toString(36).substring(7);
     const formData = {
@@ -127,6 +146,7 @@ export default function NewTripPage() {
 
   return (
     <>
+      {/* Error dialog when submission fails */}
       <Dialog opened={opened} withCloseButton onClose={close} size="md" radius="md">
         <Text c="red" size="md" mb="xs" fw={500}>
           Error submitting form
@@ -135,6 +155,8 @@ export default function NewTripPage() {
           There was some error submitting the form. Please try again.
         </Text>
       </Dialog>
+
+      {/* Loader animation displayed while loading */}
       {loading && (
         <>
           <Center m={30}>
@@ -149,6 +171,8 @@ export default function NewTripPage() {
           </Center>
         </>
       )}
+
+      {/* Form for creating a new trip */}
       {!loading && (
         <Container className={classes.wrapper} size={1400}>
           <Title ta="center" mt={-30} order={2}>

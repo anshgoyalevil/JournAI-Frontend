@@ -3,6 +3,14 @@ import { ActionIcon, useMantineColorScheme, useComputedColorScheme, Group } from
 import { IconSun, IconMoon } from '@tabler/icons-react';
 import classes from './ColorSchemeToggle.module.css';
 
+/**
+ * A toggle switch component for changing between light and dark color schemes.
+ * This component uses Mantine's color scheme management to allow users to switch
+ * between a light and dark theme. It displays an icon that represents the current theme,
+ * and changes the color scheme when clicked.
+ *
+ * @component
+ */
 export default function ColorSchemeToggle() {
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
