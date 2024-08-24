@@ -12,6 +12,7 @@ import {
   Group,
   NumberInput,
   useComputedColorScheme,
+  Dialog,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {
@@ -24,8 +25,8 @@ import {
 } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
-import { notifications } from '@mantine/notifications';
 import Lottie from 'react-lottie';
+import { useDisclosure, useMediaQuery, useWindowScroll } from '@mantine/hooks';
 import AnimatedLoader from '../../lotties/animateLoader.json';
 import AnimatedLoaderDark from '../../lotties/animateLoaderDark.json';
 import classes from './NewTripPage.module.css';
@@ -37,6 +38,10 @@ export default function NewTripPage() {
   const [people, setPeople] = useState<string | number>(1);
   const [accessKey, setAccessKey] = useState('');
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [scroll, scrollTo] = useWindowScroll();
+  const [opened, { toggle, close }] = useDisclosure(false);
+  const matches = useMediaQuery('(min-width: 28em)');
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
   const defaultOptionsForLottie = {
@@ -88,6 +93,7 @@ export default function NewTripPage() {
       uniqId,
       accessKey,
     };
+    scrollTo({ y: 0 });
     try {
       setLoading(true);
       const res = await newTripService(formData);
@@ -115,19 +121,33 @@ export default function NewTripPage() {
       window.location.href = `/trip/${uniqId}`;
     } catch (error) {
       setLoading(false);
-      notifications.show({
-        title: 'Error submitting form',
-        message: 'Please try again later',
-      });
+      toggle();
     }
   };
 
   return (
     <>
+      <Dialog opened={opened} withCloseButton onClose={close} size="md" radius="md">
+        <Text c="red" size="md" mb="xs" fw={500}>
+          Error submitting form
+        </Text>
+        <Text size="sm" mb="xs" fw={500}>
+          There was some error submitting the form. Please try again.
+        </Text>
+      </Dialog>
       {loading && (
-        <Center h={600}>
-          <Lottie options={defaultOptionsForLottie} height={400} width={400} />
-        </Center>
+        <>
+          <Center m={30}>
+            <Title size={20}>Creating your wonderful trip... </Title>
+          </Center>
+          <Center h={matches ? 500 : 250}>
+            <Lottie
+              options={defaultOptionsForLottie}
+              height={matches ? 400 : 200}
+              width={matches ? 400 : 200}
+            />
+          </Center>
+        </>
       )}
       {!loading && (
         <Container className={classes.wrapper} size={1400}>
