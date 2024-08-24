@@ -16,6 +16,7 @@ import {
 import { useForm } from '@mantine/form';
 import {
   IconCalendar,
+  IconKey,
   IconLocation,
   IconMoneybag,
   IconTrash,
@@ -34,6 +35,7 @@ export default function NewTripPage() {
   const [prefs, setPrefs] = useState(['Museums', 'Historical']);
   const [budget, setBudget] = useState('');
   const [people, setPeople] = useState<string | number>(1);
+  const [accessKey, setAccessKey] = useState('');
   const [loading, setLoading] = useState(false);
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
@@ -84,6 +86,7 @@ export default function NewTripPage() {
       budget,
       people,
       uniqId,
+      accessKey,
     };
     try {
       setLoading(true);
@@ -235,6 +238,18 @@ export default function NewTripPage() {
                   onChange={setPeople}
                   required
                   leftSection={<IconUsersGroup style={{ width: rem(18), height: rem(18) }} />}
+                />
+                <Text fw={600} mt={30}>
+                  Do you have an access key?
+                </Text>
+                <TextInput
+                  mt={15}
+                  placeholder="Access Key"
+                  value={accessKey}
+                  onChange={(event) => setAccessKey(event.currentTarget.value)}
+                  description="If you have an access key, please enter it here. We use it to prevent our API from being abused."
+                  required
+                  leftSection={<IconKey style={{ width: rem(18), height: rem(18) }} />}
                 />
                 <Center>
                   <Button justify="center" variant="light" mt={40} type="submit">
