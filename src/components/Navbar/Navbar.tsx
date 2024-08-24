@@ -62,13 +62,13 @@ export function Navbar() {
           <Divider my="sm" />
 
           {/* Drawer navigation links */}
-          <Link to="/" className={classes.link}>
+          <Link to="/" onClick={closeDrawer} className={classes.link}>
             Home
           </Link>
-          <Link to="/new-trip" className={classes.link}>
+          <Link to="/new-trip" onClick={closeDrawer} className={classes.link}>
             New Trip
           </Link>
-          <Link to="/my-trips" className={classes.link}>
+          <Link to="/my-trips" onClick={closeDrawer} className={classes.link}>
             My Trips
           </Link>
           <Divider my="sm" />
@@ -76,7 +76,7 @@ export function Navbar() {
           {/* Drawer content including color scheme toggle and "Add a trip" button */}
           <Group justify="center" pb="xl" px="md">
             <ColorSchemeToggle />
-            <Button component={Link} to="/new-trip">
+            <Button onClick={closeDrawer} component={Link} to="/new-trip">
               Add a trip
             </Button>
           </Group>
