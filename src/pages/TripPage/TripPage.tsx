@@ -39,43 +39,48 @@ export default function TripPage() {
       </Title>
       <Grid>
         {Object.keys(activitiesByDestination).map((destination: any) => (
-          <Grid.Col px={30} span={{ base: 12, xs: 6 }}>
-            <div key={destination}>
-              <Title mb={20} mt={20} order={3}>
-                Destination: {destination}
-              </Title>
-              {Object.keys(activitiesByDestination[destination]).map((day: any) => (
-                <div key={day}>
-                  <Title mb={10} mt={10} order={4}>
-                    Day {day}
-                  </Title>
-                  <Timeline active={100} bulletSize={32} radius="md" lineWidth={2}>
-                    {activitiesByDestination[destination][day].map(
-                      (activity: any, index: number) => (
-                        <Timeline.Item
-                          key={index}
-                          bullet={<IconMapPin size={20} />}
-                          title={activity.name}
-                        >
-                          <Text size="xs" mt={4}>
-                            <Center inline>
-                              <IconClock size={14} style={{ marginRight: 5 }} />
-                              Duration: {activity.duration} hours
-                            </Center>
-                          </Text>
-                          <Text size="xs" mt={4}>
-                            <Center inline>
-                              <IconCurrencyDollar size={14} style={{ marginRight: 5 }} />
-                              Cost: ${activity.cost}
-                            </Center>
-                          </Text>
-                        </Timeline.Item>
-                      )
-                    )}
-                  </Timeline>
-                </div>
-              ))}
-            </div>
+          <Grid.Col
+            px={30}
+            span={{ base: 12, xs: Object.keys(activitiesByDestination).length === 1 ? 12 : 6 }}
+          >
+            <Center>
+              <div key={destination}>
+                <Title mb={20} mt={20} order={3}>
+                  Destination: {destination}
+                </Title>
+                {Object.keys(activitiesByDestination[destination]).map((day: any) => (
+                  <div key={day}>
+                    <Title mb={10} mt={10} order={4}>
+                      Day {day}
+                    </Title>
+                    <Timeline active={100} bulletSize={32} radius="md" lineWidth={2}>
+                      {activitiesByDestination[destination][day].map(
+                        (activity: any, index: number) => (
+                          <Timeline.Item
+                            key={index}
+                            bullet={<IconMapPin size={20} />}
+                            title={activity.name}
+                          >
+                            <Text size="xs" mt={4}>
+                              <Center inline>
+                                <IconClock size={14} style={{ marginRight: 5 }} />
+                                Duration: {activity.duration} hours
+                              </Center>
+                            </Text>
+                            <Text size="xs" mt={4}>
+                              <Center inline>
+                                <IconCurrencyDollar size={14} style={{ marginRight: 5 }} />
+                                Cost: ${activity.cost}
+                              </Center>
+                            </Text>
+                          </Timeline.Item>
+                        )
+                      )}
+                    </Timeline>
+                  </div>
+                ))}
+              </div>
+            </Center>
           </Grid.Col>
         ))}
       </Grid>
