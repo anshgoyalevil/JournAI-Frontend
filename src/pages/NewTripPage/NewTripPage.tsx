@@ -23,12 +23,12 @@ import {
 } from '@tabler/icons-react';
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
-import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import Lottie from 'react-lottie';
 import AnimatedLoader from '../../lotties/animateLoader.json';
 import AnimatedLoaderDark from '../../lotties/animateLoaderDark.json';
 import classes from './NewTripPage.module.css';
+import newTripService from '@/services/newTripService';
 
 export default function NewTripPage() {
   const [prefs, setPrefs] = useState(['Museums', 'Historical']);
@@ -87,7 +87,7 @@ export default function NewTripPage() {
     };
     try {
       setLoading(true);
-      const res = await axios.post('https://journai-backend-production.up.railway.app/api/newtrip', formData);
+      const res = await newTripService(formData);
 
       if (res.status === 200) {
         setResponse(res.data[0]);
